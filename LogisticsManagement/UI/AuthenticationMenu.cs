@@ -55,8 +55,17 @@ namespace LogisticsManagement.UI
 
             if (option == 1)
             {                
-                _authService.Login(userId, password);
-                Console.WriteLine("Login successfull");
+                bool isSuccess= _authService.Login(userId, password);
+                if (isSuccess)
+                {
+                    Console.WriteLine("Login Successfull");
+                }
+                else
+                {
+                    Console.WriteLine("Login Failed");
+
+                }
+
             }
             else if (option == 2)
             {

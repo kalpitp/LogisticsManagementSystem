@@ -9,7 +9,7 @@ namespace LogisticsManagement.Services.Interface
     public interface IAuthenticationServices
     {
 
-        void Login(string userid, string password);
+        bool Login(string userid, string password);
 
     }
 }

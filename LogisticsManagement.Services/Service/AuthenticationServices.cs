@@ -1,4 +1,5 @@
 ﻿using LogisticsManagement.DataAccess.Models;
+using LogisticsManagement.DataAccess.Repository;
 using LogisticsManagement.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,14 @@ namespace LogisticsManagement.Services.Service
 {
     public class AuthenticationServices : IAuthenticationServices
     {
-        public void Login(string userId, string password)
+        private readonly IAuthenticationRepository _repository;
+
+        public AuthenticationServices(IAuthenticationRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public  bool Login(string userId, string password)
         {
             // for email validation
             string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
@@ -22,11 +30,13 @@ namespace LogisticsManagement.Services.Service
                  CommonServices.ErrorMessage("User ID or Password can't be empty");
             }
 
-            // check if email is valid
-            if (!Regex.IsMatch(userId, pattern))
+             User user=  _repository.GetUserByUserId(userId);
+
+            if(user != null && user.Password==password)
             {
-                CommonServices.ErrorMessage("Enter valid User Id!!");
+                return true;
             }
+            return false;
         }
     }
 }

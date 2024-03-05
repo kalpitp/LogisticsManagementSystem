@@ -2,6 +2,8 @@
 using LogisticsManagement.UI;
 using LogisticsManagement.Services.Interface;
 using LogisticsManagement.Services.Service;
+using LogisticsManagement.DataAccess.Repository;
+using LogisticsManagement.DataAccess.Models;
 
 
 namespace LogisticsManagement
@@ -11,7 +13,9 @@ namespace LogisticsManagement
         static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
+                .AddDbContext<CybageLogisticsContext>()
                 .AddSingleton<IAuthenticationServices, AuthenticationServices>()
+                .AddSingleton<IAuthenticationRepository, AuthenticationRepository>()
                 .BuildServiceProvider();
 
             var authService = serviceProvider.GetService<IAuthenticationServices>();
